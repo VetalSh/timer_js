@@ -21,19 +21,32 @@ window.addEventListener('DOMContentLoaded', function() {
     function updateClock() {
       let timer = getTimeRemaining();
 
-      timerHours.textContent = timer.hours;
-      timerMinutes.textContent = timer.minutes;
-      timerSeconds.textContent = timer.seconds;
-
-      if(timer.timeRemaining > 0) {
-        setTimeout(updateClock, 1000);
+      if (timer.timeRemaining > 0) {
+        if (timer.hours < 10) {
+          timerHours.textContent = '0' + timer.hours;
+        } else {
+          timerHours.textContent = timer.hours;
+        }
+        if (timer.minutes < 10) {
+          timerMinutes.textContent = '0' + timer.minutes;
+        } else {
+          timerMinutes.textContent = timer.minutes;
+        }
+        if (timer.seconds < 10) {
+          timerSeconds.textContent = '0' + timer.seconds;
+        } else {
+          timerSeconds.textContent = timer.seconds;
+        }
+      } else {
+        timerHours.textContent = '00';
+        timerMinutes.textContent = '00';
+        timerSeconds.textContent = '00';
       }
     }
 
     updateClock();
   }
 
-  countTimer('01 july 2020');
-  // setInterval(countTimer, 1000, '01 july 2020');
+  setInterval(countTimer, 1000, '04 july 2020');
 
 });
