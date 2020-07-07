@@ -53,24 +53,44 @@ window.addEventListener('DOMContentLoaded', function() {
   const toggleMenu = () => {
     const btnMenu = document.querySelector('.menu'),
           menu = document.querySelector('menu'),
-          closeBtn = document.querySelector('.close-btn'),
-          menuItems = menu.querySelectorAll('ul>li');
+          main = document.querySelector('main');
+          // closeBtn = document.querySelector('.close-btn'),
+          // menuItems = menu.querySelectorAll('ul>li');
 
     const handlerMenu = () => {
       menu.classList.toggle('active-menu');
     };
-    btnMenu.addEventListener('click', handlerMenu);
+    // btnMenu.addEventListener('click', handlerMenu);
     // closeBtn.addEventListener('click', handlerMenu);
     // menuItems.forEach((elem) => elem.addEventListener('click', handlerMenu));
-    menu.addEventListener('click', () => {
-      // console.log(event.target);
-      if (event.target.matches(menuItems)) {
-        console.log(event.target);
+
+    // Используя делегирование пишем обработчик события
+    main.addEventListener('click', (event) => {
+      let target = event.target;
+      console.log('target2: ', target);  
+      target = target.closest('.menu');    
+      if (target === btnMenu) {
+        // handlerMenu();
+        console.log('click at btnMenu');
+        menu.classList.add('active-menu');
+        return;
+      }
+      // target = target.closest('.main');
+      // if (target === main) {
+      //   console.log('click at Main');
+      //   // handlerMenu();
+      //   return;
+      // }
+    });
+    menu.addEventListener('click', (event) => {
+      let target = event.target;
+      console.log('target: ', target);
+      if (target !== menu) {
         handlerMenu();
-      } else if (event.target === closeBtn) {
-        handlerMenu();
+        return;
       }
     });
+
   };
   toggleMenu();
 
