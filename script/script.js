@@ -67,30 +67,22 @@ window.addEventListener('DOMContentLoaded', function() {
     // Используя делегирование пишем обработчик события
     main.addEventListener('click', (event) => {
       let target = event.target;
-      console.log('target2: ', target);  
       target = target.closest('.menu');    
       if (target === btnMenu) {
-        // handlerMenu();
-        console.log('click at btnMenu');
         menu.classList.add('active-menu');
         return;
+      } else {
+        menu.classList.remove('active-menu');
+        return;
       }
-      // target = target.closest('.main');
-      // if (target === main) {
-      //   console.log('click at Main');
-      //   // handlerMenu();
-      //   return;
-      // }
     });
     menu.addEventListener('click', (event) => {
       let target = event.target;
-      console.log('target: ', target);
       if (target !== menu) {
         handlerMenu();
         return;
       }
     });
-
   };
   toggleMenu();
 
