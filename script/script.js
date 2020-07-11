@@ -273,4 +273,50 @@ window.addEventListener('DOMContentLoaded', function() {
   };
 
   slider();
+
+  // Наша Команда
+  // Необходимо реализовать, чтобы по наведению мышкой менялись фотографии,
+  //  а если увести мышку с элемента то возвращается прежнее фото.
+  const commandPhoto = document.querySelectorAll('.command__photo');
+
+  commandPhoto.forEach((item) => {
+    const oldImg = item.src; // Запоминаем старую картинку
+    item.addEventListener('mouseenter', (e) => {
+      event.target.src = event.target.dataset.img;
+    });
+    item.addEventListener('mouseout', (event) => {
+      event.target.src = oldImg;
+    });
+  });
+
+  // калькулятор
+  // В калькуляторе разрешить ввод только цифр
+  const calcSquare = document.querySelector('.calc-square'), 
+        calcCount = document.querySelector('.calc-count'), 
+        calcDay = document.querySelector('.calc-day'),
+        calcBlock = document.querySelector('.calc-block');
+  
+  // Функция проверки введенного значения
+  // Если число - пропускает, буквы - удаляет
+  const checkValue = (target) => {
+    let inputChar = target.value;
+    target.value = inputChar.replace(/\D/g, '');
+  };
+
+  // Обработчик события навешиваем на родительский класс
+  calcBlock.addEventListener('input', (event) => {
+    let target = event.target;
+
+    if (target.matches('.calc-square')) {
+      checkValue(calcSquare);
+      return;
+    } else if (target.matches('.calc-count')) {
+      checkValue(calcCount);
+      return;
+    } else if (target.matches('.calc-day')) {
+      checkValue(calcDay);
+      return;
+    }
+  });
+
 });
