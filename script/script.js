@@ -383,8 +383,8 @@ window.addEventListener('DOMContentLoaded', function() {
     statusMessage.style.cssText = 'font-size: 2rem;';
     // form.appendChild(statusMessage);
 
-    form.addEventListener('submit', (event) => {
-            
+    // Форма1
+    form.addEventListener('submit', (event) => {            
       event.preventDefault();
       form.appendChild(statusMessage);      
       statusMessage.textContent = loadMessage;
@@ -408,7 +408,6 @@ window.addEventListener('DOMContentLoaded', function() {
         clearForm1();
       });
     });
-
     // Функция очистки формы1
     const clearForm1 = () => {      
       const form1Name = document.getElementById('form1-name'),
@@ -418,6 +417,37 @@ window.addEventListener('DOMContentLoaded', function() {
       form1Name.value = '';
       form1Email.value = '';
       form1Phone.value = '';
+    };
+
+    // Форма2
+    form2.addEventListener('submit', (event) => {
+      event.preventDefault();
+      form2.appendChild(statusMessage);
+      statusMessage.textContent = loadMessage;
+      const formData = new FormData(form2);
+      let body = {};
+      formData.forEach((val, key) => {
+        body[key] = val;
+      });
+      postData(body,
+         () => {
+        statusMessage.textContent = successMessage;
+        clearForm2();
+      }, (error) => {
+        console.error(error);
+        statusMessage.textContent = errorMessage;
+        clearForm2();
+      });
+    });
+    // Функция очистки формы2
+    const clearForm2 = () => {      
+      const form2Name = document.getElementById('form2-name'),
+            form2Email = document.getElementById('form2-email'),
+            form2Phone = document.getElementById('form2-phone');
+
+      form2Name.value = '';
+      form2Email.value = '';
+      form2Phone.value = '';
     };
 
     const postData = (body, outputData, errorData) => {
@@ -434,10 +464,8 @@ window.addEventListener('DOMContentLoaded', function() {
       });
       
       request.open('POST', './server.php');
-      // request.setRequestHeader('Content-Type', 'multipart/form-data');
       request.setRequestHeader('Content-Type', 'application/json');
-      
-      // request.send(formData);
+
       request.send(JSON.stringify(body));
     };
 
