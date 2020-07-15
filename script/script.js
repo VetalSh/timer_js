@@ -368,4 +368,25 @@ window.addEventListener('DOMContentLoaded', function() {
 
   calc(100);
 
+  // Validator
+  const valid = new Validator({
+    selector: '#form1',
+    pattern: {
+      phone: /^\+380\d{9}$/,
+      zip: /\d{5,6}/
+    },
+    method: {
+      'form1-phone': [
+        ['notEmpty'],
+        ['pattern', 'phone']
+      ],
+      'form1-email': [
+        ['notEmpty'],
+        ['pattern', 'email']
+      ]
+    }
+  });
+
+  valid.init();
+
 });
