@@ -376,13 +376,53 @@ window.addEventListener('DOMContentLoaded', function() {
           successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
 
     const form = document.getElementById('form1'),
-          form2 = document.getElementById('form2');
+          form2 = document.getElementById('form2'),
+          form3 = document.getElementById('form3');
 
     const statusMessage = document.createElement('div');
     // statusMessage.textContent = 'Тут будет сообщение';
     statusMessage.style.cssText = 'font-size: 2rem;';
     // form.appendChild(statusMessage);
 
+    // Функции проверки корректного ввода символов в формы
+    const checkForm1 = (event) => {
+      let target = event.target;
+      if (target.matches('#form1-phone')) {
+        target.value = target.value.replace(/(?<!^)\+|[^\d+]/g, '');
+        // maskPhone('#form1-phone');
+      } else
+      if (target.matches('#form1-name')) {
+        target.value = target.value.replace(/[^а-яё\s]/gi, '');
+      }
+    };
+
+    const checkForm2 = (event) => {
+      let target = event.target;
+      if (target.matches('#form2-phone')) {
+        target.value = target.value.replace(/(?<!^)\+|[^\d+]/g, '');
+        // maskPhone('#form2-phone');
+      } else
+      if (target.matches('#form2-name') || target.matches('#form2-message')) {
+        target.value = target.value.replace(/[^а-яё\s]/gi, '');
+      }
+    };
+
+    const checkForm3 = (event) => {
+      let target = event.target;
+      if (target.matches('#form3-phone')) {
+        target.value = target.value.replace(/(?<!^)\+|[^\d+]/g, '');
+        // maskPhone('#form3-phone');
+      } else
+      if (target.matches('#form3-name')) {
+        target.value = target.value.replace(/[^а-яё\s]/gi, '');
+      }
+    };
+
+    // Обработчики событий корректного ввода данных в форму
+    form.addEventListener('change', checkForm1);
+    form2.addEventListener('change', checkForm2);
+    form3.addEventListener('change', checkForm3);
+    
     // Форма1
     form.addEventListener('submit', (event) => {            
       event.preventDefault();
@@ -443,11 +483,44 @@ window.addEventListener('DOMContentLoaded', function() {
     const clearForm2 = () => {      
       const form2Name = document.getElementById('form2-name'),
             form2Email = document.getElementById('form2-email'),
-            form2Phone = document.getElementById('form2-phone');
+            form2Phone = document.getElementById('form2-phone'),
+            form2Message = document.getElementById('form2-message');
 
       form2Name.value = '';
       form2Email.value = '';
       form2Phone.value = '';
+      form2Message.value = '';
+    };
+
+    // Модальное окно, форма3
+    form3.addEventListener('submit', (event) => {
+      event.preventDefault();
+      form3.appendChild(statusMessage);
+      statusMessage.textContent = loadMessage;
+      const formData = new FormData(form3);
+      let body = {};
+      formData.forEach((val, key) => {
+        body[key] = val;
+      });
+      postData(body,
+         () => {
+           statusMessage.textContent = successMessage;
+           clearForm3();
+         }, (error) => {
+           console.error(error);
+           statusMessage.textContent = errorMessage;
+           clearForm3();
+         });
+    });
+    // Функция очистки формы3
+    const clearForm3 = () => {
+      const form3Name = document.getElementById('form3-name'),
+            form3Email = document.getElementById('form3-email'),
+            form3Phone = document.getElementById('form3-phone');
+
+      form3Name.value = '';
+      form3Email.value = '';
+      form3Phone.value = '';
     };
 
     const postData = (body, outputData, errorData) => {
