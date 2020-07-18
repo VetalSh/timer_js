@@ -433,14 +433,17 @@ window.addEventListener('DOMContentLoaded', function() {
         body[key] = val;
       });
       postData(body)
-        .then(() => {
-            statusMessage.textContent = successMessage;
-            clearForm1();
+        .then((response) => {
+          if (response.status !== 200) {
+            throw new Error('status network not 200');
+          }
+          statusMessage.textContent = successMessage;
+          clearForm1();
         })
         .catch((error) => {
-            console.error(error);
-            statusMessage.textContent = errorMessage;
-            clearForm1();
+          console.error(error);
+          statusMessage.textContent = errorMessage;
+          clearForm1();
         });
     });
     // Функция очистки формы1
@@ -465,14 +468,17 @@ window.addEventListener('DOMContentLoaded', function() {
         body[key] = val;
       });
       postData(body)
-        .then(() => {
-            statusMessage.textContent = successMessage;
-            clearForm2();
+        .then((response) => {
+          if (response.status !== 200) {
+            throw new Error('status network not 200');
+          }
+          statusMessage.textContent = successMessage;
+          clearForm2();
         })
         .catch((error) => {
-            console.error(error);
-            statusMessage.textContent = errorMessage;
-            clearForm2();
+          console.error(error);
+          statusMessage.textContent = errorMessage;
+          clearForm2();
         });
     });
     // Функция очистки формы2
@@ -499,14 +505,17 @@ window.addEventListener('DOMContentLoaded', function() {
         body[key] = val;
       });
       postData(body)
-        .then(() => {
-            statusMessage.textContent = successMessage;
-            clearForm3();
+        .then((response) => {
+          if (response.status !== 200) {
+            throw new Error('status network not 200');
+          }
+          statusMessage.textContent = successMessage;
+          clearForm3();
         })
         .catch((error) => {
-            console.error(error);
-            statusMessage.textContent = errorMessage;
-            clearForm3();
+          console.error(error);
+          statusMessage.textContent = errorMessage;
+          clearForm3();
         });
     });
     // Функция очистки формы3
@@ -521,22 +530,13 @@ window.addEventListener('DOMContentLoaded', function() {
     };
 
     const postData = (body) => {
-      return new Promise((resolve, reject) => {
-        const request = new XMLHttpRequest();
-        request.addEventListener('readystatechange', () => {
-          if (request.readyState !== 4) {
-            return;
-          }
-          if (request.status === 200) {
-            resolve();
-          } else {
-            reject(request.statusText);
-          }
-        }); 
-
-        request.open('POST', './server.php');
-        request.setRequestHeader('Content-Type', 'application/json');
-        request.send(JSON.stringify(body));     
+      return fetch('./server.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body),
+        credentials: 'include'
       });
     };
 
