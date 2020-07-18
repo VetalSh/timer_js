@@ -380,7 +380,6 @@ window.addEventListener('DOMContentLoaded', function() {
           form3 = document.getElementById('form3');
 
     const statusMessage = document.createElement('div');
-    // statusMessage.textContent = 'Тут будет сообщение';
     statusMessage.style.cssText = 'font-size: 2rem;';
     // form.appendChild(statusMessage);
 
@@ -430,23 +429,19 @@ window.addEventListener('DOMContentLoaded', function() {
       statusMessage.textContent = loadMessage;
       const formData = new FormData(form);
       let body = {};
-      // 1 case
-      // for (let val of formData.entries()) {
-      //   body[val[0]] = val[1];
-      // }
-      // 2 case
       formData.forEach((val, key) => {
         body[key] = val;
       });
-      postData(body,
-         () => {
-        statusMessage.textContent = successMessage;
-        clearForm1();
-      }, (error) => {
-        console.error(error);
-        statusMessage.textContent = errorMessage;
-        clearForm1();
-      });
+      postData(body)
+        .then(() => {
+            statusMessage.textContent = successMessage;
+            clearForm1();
+        })
+        .catch((error) => {
+            console.error(error);
+            statusMessage.textContent = errorMessage;
+            clearForm1();
+        });
     });
     // Функция очистки формы1
     const clearForm1 = () => {      
@@ -469,15 +464,16 @@ window.addEventListener('DOMContentLoaded', function() {
       formData.forEach((val, key) => {
         body[key] = val;
       });
-      postData(body,
-         () => {
-        statusMessage.textContent = successMessage;
-        clearForm2();
-      }, (error) => {
-        console.error(error);
-        statusMessage.textContent = errorMessage;
-        clearForm2();
-      });
+      postData(body)
+        .then(() => {
+            statusMessage.textContent = successMessage;
+            clearForm2();
+        })
+        .catch((error) => {
+            console.error(error);
+            statusMessage.textContent = errorMessage;
+            clearForm2();
+        });
     });
     // Функция очистки формы2
     const clearForm2 = () => {      
@@ -502,15 +498,16 @@ window.addEventListener('DOMContentLoaded', function() {
       formData.forEach((val, key) => {
         body[key] = val;
       });
-      postData(body,
-         () => {
-           statusMessage.textContent = successMessage;
-           clearForm3();
-         }, (error) => {
-           console.error(error);
-           statusMessage.textContent = errorMessage;
-           clearForm3();
-         });
+      postData(body)
+        .then(() => {
+            statusMessage.textContent = successMessage;
+            clearForm3();
+        })
+        .catch((error) => {
+            console.error(error);
+            statusMessage.textContent = errorMessage;
+            clearForm3();
+        });
     });
     // Функция очистки формы3
     const clearForm3 = () => {
@@ -523,23 +520,24 @@ window.addEventListener('DOMContentLoaded', function() {
       form3Phone.value = '';
     };
 
-    const postData = (body, outputData, errorData) => {
-      const request = new XMLHttpRequest();
-      request.addEventListener('readystatechange', () => {
-        if (request.readyState !== 4) {
-          return;
-        }
-        if (request.status === 200) {
-          outputData();
-        } else {
-          errorData(request.status);
-        }
-      });
-      
-      request.open('POST', './server.php');
-      request.setRequestHeader('Content-Type', 'application/json');
+    const postData = (body) => {
+      return new Promise((resolve, reject) => {
+        const request = new XMLHttpRequest();
+        request.addEventListener('readystatechange', () => {
+          if (request.readyState !== 4) {
+            return;
+          }
+          if (request.status === 200) {
+            resolve();
+          } else {
+            reject(request.statusText);
+          }
+        }); 
 
-      request.send(JSON.stringify(body));
+        request.open('POST', './server.php');
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.send(JSON.stringify(body));     
+      });
     };
 
   };
