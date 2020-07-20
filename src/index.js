@@ -7,8 +7,6 @@ elementClosest(window);
 import "formdata-polyfill";
 import 'es6-promise';
 import 'fetch-polyfill';
-// var FormData = require('formdata-polyfill');
-// var Promise = require('es6-promise').Promise;
 
 
 import countTimer from './modules/countTimer';

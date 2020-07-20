@@ -27,8 +27,11 @@ const sendForm = () => {
     if (target.matches('#form2-phone')) {
       target.value = target.value.replace(/(?<!^)\+|[^\d+]/g, '');
     } else
-    if (target.matches('#form2-name') || target.matches('#form2-message')) {
+    if (target.matches('#form2-name')) {
       target.value = target.value.replace(/[^а-яё\s]/gi, '');
+    } else
+    if (target.matches('#form2-message')) {
+      target.value = target.value.replace(/[^?!,.а-яё\s]/gi, '');
     }
   };
 
