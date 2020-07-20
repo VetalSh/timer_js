@@ -9,27 +9,29 @@ const togglePopUp = () => {
     elem.addEventListener('click', () => {
       popup.style.display = 'block';
 
-      // let width = document.documentElement.offsetWidth;
+      let width = document.documentElement.offsetWidth;
       // console.log('width: ', width);
 
-      // if (width >= 768) {
-      //   popupContent.style.left = 0 + 'px';
-      //   popupContent.style.top = 0 + 'px';
-      //   let flyInterval,
-      //       count = 0; 
+      if (width >= 768) {
+        popupContent.style.left = 0 + 'px';
+        popupContent.style.top = 0 + 'px';
+        let flyInterval,
+            count = 0,
+            windowCenter = Math.floor((width / 2 / 10) - 10);
+        // console.log('windowCenter: ', windowCenter);
 
-      //   let flyAnimate = function() {
-      //     flyInterval = requestAnimationFrame(flyAnimate);
-      //     count++;
-      //     if(count < 40){
-      //       popupContent.style.left = count * 10 + 'px';
-      //       popupContent.style.top = count * 3 + 'px';
-      //     } else {
-      //       cancelAnimationFrame(flyInterval);
-      //     }
-      //   };
-      //   flyInterval = requestAnimationFrame(flyAnimate);
-      // }
+        let flyAnimate = function() {
+          flyInterval = requestAnimationFrame(flyAnimate);
+          count++;
+          if(count < windowCenter){
+            popupContent.style.left = count * 10 + 'px';
+            popupContent.style.top = count * 3 + 'px';
+          } else {
+            cancelAnimationFrame(flyInterval);
+          }
+        };
+        flyInterval = requestAnimationFrame(flyAnimate);
+      }
       
     });
   });  
