@@ -21,7 +21,7 @@ const toggleMenu = () => {
   });
   menu.addEventListener('click', (event) => {
     let target = event.target;
-    if (target !== menu) {
+    if (target !== menu && event.target.tagName !== 'LI') {
       handlerMenu();
       return;
     }
