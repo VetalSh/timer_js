@@ -31,6 +31,9 @@ const togglePopUp = () => {
           }
         };
         flyInterval = requestAnimationFrame(flyAnimate);
+      } else {
+        popupContent.style.left = 50 + '%';
+        popupContent.style.marginLeft = -15 + 'rem';
       }
       
     });
