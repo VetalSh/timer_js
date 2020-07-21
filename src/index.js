@@ -19,7 +19,8 @@ import calc from './modules/calc';
 import sendForm from './modules/sendForm';
 
 // Timer
-let idInterval = setInterval(countTimer, 1000, '22 july 2021');
+let idInterval = setInterval(countTimer, 0, '22 july 2021');
+idInterval = setInterval(countTimer, 1000, '22 july 2021');
 
 // Menu
 toggleMenu();
